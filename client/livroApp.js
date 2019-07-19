@@ -3,7 +3,7 @@ angular.module('livroApp', [])
     var livroList = this;
     livroList.livros = [];
     livroList.totalRegistros = 0;
-    livroList.registrosPorPagina = 5;
+    livroList.registrosPorPagina = 10;
 
     livroList.clickBuscar = function () {
       var params = {
