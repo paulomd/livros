@@ -14,7 +14,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="livro.js"></script>
+    <script src="livroApp.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -32,23 +32,23 @@
                     ng-model="livroList.filtro">
             </div>
             <div class="col-2">
-                <button type="button" ng-click="livroList.buscar()" class="btn btn-primary">Buscar</button>
+                <button type="button" ng-click="livroList.clickBuscar()" class="btn btn-primary">Buscar</button>
             </div>
         </div>
 
 
         <table class="table">
-            <thead >
+            <thead>
                 <tr>
-                    <th style="width: 10%; text-align: left" >Filtrar ano de Publicação:</th>
-                    <th style="width: 10%; text-align: right" >
-                        <input type="text" class="form-control" ng-model="livroList.anoInicial">
+                    <th style="width: 20%; text-align: left">Filtrar ano de Publicação:</th>
+                    <th style="width: 10%; text-align: right">
+                        <input type="text" class="form-control" pattern="[0-9]*" maxlength="4" ng-model="livroList.anoInicial">
                     </th>
-                   <th style="width: 10%; text-align: center" >até</th>
-                    <th style="width: 10%; text-align: left" >
-                        <input type="text" class="form-control" ng-model="livroList.anoFinal">
+                    <th style="width: 5%; text-align: center">até</th>
+                    <th style="width: 10%; text-align: left">
+                        <input type="text" class="form-control" pattern="[0-9]*" maxlength="4" ng-model="livroList.anoFinal">
                     </th>
-                    <th style="width: 40%; text-align: right" > {{livroList.totalRegistros}} resultados encontrados </th>
+                    <th style="width: 55%; text-align: right"> {{livroList.totalRegistros}} resultados encontrados </th>
                 </tr>
             </thead>
         </table>
@@ -72,10 +72,89 @@
                         <td><small>{{livro.autor}}</small></td>
                         <td><small>{{livro.editora}}</small></td>
                         <td><small>{{livro.ano}}</small></td>
-                        <td><small>Detalhes</small></td>
+                        <td>
+                            <button ng-click="livroList.clickDetalhe(livro)" type="button"
+                                class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detalheModal">
+                                Detalhes
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {{pagina.selecionada ? 'active' : ''}} {{pagina.descricao === '...' ? 'disabled' : ''}} "
+                        ng-repeat="pagina in livroList.paginas">
+                        <a class="page-link" href="#"
+                            ng-click="livroList.clickPagina(pagina.pagina)">{{pagina.descricao}}</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Modal -->
+            <div class="modal fade" id="detalheModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{livroList.livroDetalhe.titulo}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">ISBN</label>
+                                <div class="col-sm-10">
+                                    <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.isbn}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Autor</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.autor}}">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Editora</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.editora}}">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Ano</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.ano}}">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Idioma</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.idioma}}">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">peso</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control" value="{{livroList.livroDetalhe.peso}}g">
+                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Dimensões</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  readonly class="form-control"
+                                         value=" {{livroList.livroDetalhe.comprimento}}cm comprimento x {{livroList.livroDetalhe.largura}}cm largura x {{livroList.livroDetalhe.altura}}cm altura">
+                                    </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>
