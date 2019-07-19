@@ -37,7 +37,7 @@ public class PaginacaoUtil {
     }
 
     private  void criarPaginaAvanco(List<Pagina> paginas) {
-        if(registroPaginado.getTotalPaginas() > quantidadeAvancoPaginas) {
+        if(registroPaginado.getTotalPaginas() > quantidadePaginas) {
             int avanco = getPaginaInicio() + quantidadeAvancoPaginas;
             if (avanco > registroPaginado.getTotalPaginas()) {
                 avanco = registroPaginado.getTotalPaginas();
@@ -61,6 +61,9 @@ public class PaginacaoUtil {
         if(inicio + quantidadePaginas > registroPaginado.getTotalPaginas()){
             inicio = registroPaginado.getTotalPaginas() - quantidadePaginas;
         }
+        if(inicio < 1){
+            inicio = 1;
+        }
         return inicio;
     }
 
@@ -72,32 +75,6 @@ public class PaginacaoUtil {
         return fim;
     }
 
-    public static void main(String[] args) {
-        RegistroPaginado<Livro> registroPaginado = new RegistroPaginado<>();
-        registroPaginado.setPagina(13);
-        registroPaginado.setRegistrosPorPagina(10);
-        registroPaginado.setTotalRegistros(2000);
-        List<Pagina> paginas = registroPaginado.getPaginas();
-        System.out.println("-----------------------------");
-        paginas.forEach(p -> System.out.println(p.getDescricao()+" - "+p.getPagina()));
 
-        int quantidadePaginas = 6;
-
-        for ( int pagina = 1; pagina < 15; pagina++){
-            int inicio = pagina % quantidadePaginas;
-//            if(inicio == 0){
-//                inicio =  (((pagina-)/quantidadePaginas)*quantidadePaginas)+1;;
-//            }else{
-//                inicio = ((pagina/quantidadePaginas)*quantidadePaginas)+1;
-//            }
-            inicio = ((pagina/quantidadePaginas)*quantidadePaginas)+1;
-            if(pagina % quantidadePaginas == 0){
-                inicio--;
-            }
-
-            System.out.println(pagina + " - "+inicio);
-        }
-
-    }
 
 }
