@@ -2,7 +2,7 @@ package teste.supero.resources;
 
 import teste.supero.dao.LivroDao;
 import teste.supero.models.Livro;
-import teste.supero.models.RegistroPaginado;
+import teste.supero.util.RegistroPaginado;
 import teste.supero.util.Filtros;
 import teste.supero.util.ParametroPaginacao;
 

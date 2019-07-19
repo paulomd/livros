@@ -1,15 +1,12 @@
 package teste.supero.dao;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import teste.supero.models.RegistroPaginado;
+import teste.supero.util.RegistroPaginado;
 import teste.supero.util.ParametroPaginacao;
 
 import java.lang.reflect.ParameterizedType;
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 

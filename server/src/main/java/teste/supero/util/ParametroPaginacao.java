@@ -4,6 +4,9 @@ import javax.ws.rs.QueryParam;
 
 public class ParametroPaginacao {
 
+    private Integer paginaPadrao = 1;
+    private Integer registrosPorPaginaPadrao = 10;
+
     @QueryParam("pagina")
     private Integer pagina;
 
@@ -11,11 +14,11 @@ public class ParametroPaginacao {
     private Integer registrosPorPagina;
 
     public Integer getPagina() {
-        return pagina != null ? pagina : 1;
+        return pagina != null ? pagina : paginaPadrao;
     }
 
     public Integer getRegistrosPorPagina() {
-        return registrosPorPagina != null ? registrosPorPagina : 10;
+        return registrosPorPagina != null ? registrosPorPagina : registrosPorPaginaPadrao;
     }
 
     public void setRegistrosPorPagina(Integer registrosPorPagina) {

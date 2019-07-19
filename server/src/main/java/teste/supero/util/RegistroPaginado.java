@@ -1,4 +1,4 @@
-package teste.supero.models;
+package teste.supero.util;
 
 import teste.supero.util.ParametroPaginacao;
 
@@ -16,6 +16,8 @@ public class RegistroPaginado<T> {
     private Integer registrosPorPagina;
 
     private List<T> registros;
+
+    private List<Pagina> paginas;
 
     public RegistroPaginado() {
 
@@ -49,6 +51,7 @@ public class RegistroPaginado<T> {
     public void setTotalRegistros(Integer totalRegistros) {
         this.totalRegistros = totalRegistros;
         calcTotalPaginas();
+        criarPaginas();
     }
 
     public Integer getRegistrosPorPagina() {
@@ -67,7 +70,23 @@ public class RegistroPaginado<T> {
         this.registros = registros;
     }
 
+    public List<Pagina> getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(List<Pagina> paginas) {
+        this.paginas = paginas;
+    }
+
     private void calcTotalPaginas() {
-        setTotalPaginas((int) ((getTotalRegistros() / getRegistrosPorPagina()) + 1));
+         Integer calc = (int) ((getTotalRegistros() / getRegistrosPorPagina()));
+         if(calc * getRegistrosPorPagina() < getTotalRegistros()){
+             calc++;
+         }
+         setTotalPaginas(calc);
+    }
+
+    private void criarPaginas(){
+        setPaginas(new PaginacaoUtil(this).criarPaginas());
     }
 }
